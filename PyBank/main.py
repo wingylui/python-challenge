@@ -1,23 +1,19 @@
-location = "/Users/winglui/Documents/GitHub/python-challenge/PyBank/Resources/budget_data.csv" 
+import csv
+path = "/Users/winglui/Documents/GitHub/python-challenge/PyBank/Resources/budget_data.csv" 
 
 # creating empty list
 date = []
 profitloss = []
 
 # creating dataframe using with open and for loop, 
-with open (location) as file:
-    # Reading each row (read as str format) and will show as "date,profit/losses\n"
-    # (1) the \n need to be moved first using .strip(); 
-    # (2) seprate date and profit/losses into a list format using .split()
-    row = file.readlines()
-    # Saving headers (first row) using the same method
-    header = row[0].strip().split(",")
-    # loop from the second row to the last
-    # using column.append("values") to put the particular values into the column with the right order
-    for n in row[1:]:
-        c1, c2 = n.strip().split(",")
-        date.append(c1)
-        profitloss.append(float(c2))
+with open (path) as file:
+    # Reading csv file using csv reader and save the header using next()
+    csvreader = csv.reader(file, delimiter=",")
+    header = next(csvreader)
+    # for loop to convert the list from row to column 
+    for row in csvreader:
+        date.append(row[0])
+        profitloss.append(float(row[1]))
 
 # Creating a new column (change) for calculating the changes between months and putting a zero in the first column
 # for loop: range(starting at 2 line, the length of the whole column)
